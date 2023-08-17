@@ -13,12 +13,10 @@ export const actions = {
             password: data.get('password')
         };
         await authClient.authLoginCreate({customUserLogin: credentials}).then(
-            ((result) => {
+            result => {
                 let token = result.access
                 cookies.set('token', token, {path: '/'})
-            }),
-            ((error) => {
-                redirectToErrorPages(error.status)
-            }));
+            },
+            error => redirectToErrorPages(error.status));
     }
 };
