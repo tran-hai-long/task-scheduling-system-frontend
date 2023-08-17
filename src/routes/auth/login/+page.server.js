@@ -1,5 +1,6 @@
 import {AuthApi, Configuration} from "$lib/api-client/index.ts";
 import {backendHostname} from "$lib/stores.js";
+import {redirectToErrorPages} from "$lib/helpers.js";
 
 export const actions = {
     default: async ({cookies, request}) => {
@@ -15,8 +16,9 @@ export const actions = {
             ((result) => {
                 let token = result.access
                 cookies.set('token', token, {path: '/'})
-            }), ((error) => {
-                console.log(error);
+            }),
+            ((error) => {
+                redirectToErrorPages(error.status)
             }));
     }
 };
