@@ -1,8 +1,8 @@
 <script>
-    export let name, startTime, endTime, plannedTime, toDo;
+    export let id, name, startTime, endTime, plannedTime, toDo;
 </script>
 
-<strong>{name}</strong>
+<a href="/tasks/task/{id}">{name}</a>
 <p>Start time: {startTime}</p>
 <p>End time: {endTime}</p>
 <p>Planned time: {plannedTime}</p>
