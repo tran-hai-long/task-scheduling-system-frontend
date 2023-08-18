@@ -15,13 +15,10 @@
 
 import * as runtime from '../runtime';
 import type {
-  PaginatedTaskList,
   PatchedTask,
   Task,
 } from '../models';
 import {
-    PaginatedTaskListFromJSON,
-    PaginatedTaskListToJSON,
     PatchedTaskFromJSON,
     PatchedTaskToJSON,
     TaskFromJSON,
@@ -48,16 +45,6 @@ export interface TasksTaskUpdateRequest {
 
 export interface TasksTasksCreateRequest {
     task: Task;
-}
-
-export interface TasksTasksListRequest {
-    limit?: number;
-    offset?: number;
-}
-
-export interface TasksToDoListRequest {
-    limit?: number;
-    offset?: number;
 }
 
 /**
@@ -270,16 +257,8 @@ export class TasksApi extends runtime.BaseAPI {
     /**
      * Return a list of all tasks created by the logged-in user. User can also POST to create a new task.
      */
-    async tasksTasksListRaw(requestParameters: TasksTasksListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedTaskList>> {
+    async tasksTasksListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Task>>> {
         const queryParameters: any = {};
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -298,30 +277,22 @@ export class TasksApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTaskListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TaskFromJSON));
     }
 
     /**
      * Return a list of all tasks created by the logged-in user. User can also POST to create a new task.
      */
-    async tasksTasksList(requestParameters: TasksTasksListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedTaskList> {
-        const response = await this.tasksTasksListRaw(requestParameters, initOverrides);
+    async tasksTasksList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Task>> {
+        const response = await this.tasksTasksListRaw(initOverrides);
         return await response.value();
     }
 
     /**
      * Return a list of all to-do tasks belong to the logged-in user.
      */
-    async tasksToDoListRaw(requestParameters: TasksToDoListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedTaskList>> {
+    async tasksToDoListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Task>>> {
         const queryParameters: any = {};
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -340,14 +311,14 @@ export class TasksApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTaskListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TaskFromJSON));
     }
 
     /**
      * Return a list of all to-do tasks belong to the logged-in user.
      */
-    async tasksToDoList(requestParameters: TasksToDoListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedTaskList> {
-        const response = await this.tasksToDoListRaw(requestParameters, initOverrides);
+    async tasksToDoList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Task>> {
+        const response = await this.tasksToDoListRaw(initOverrides);
         return await response.value();
     }
 

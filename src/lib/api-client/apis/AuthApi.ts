@@ -19,9 +19,9 @@ import type {
   CustomUserLogin,
   Detail,
   JWT,
-  PaginatedSocialAccountList,
   ResendEmailVerification,
   RestAuthDetail,
+  SocialAccount,
   SocialConnect,
   SocialLogin,
   VerifyEmail,
@@ -35,12 +35,12 @@ import {
     DetailToJSON,
     JWTFromJSON,
     JWTToJSON,
-    PaginatedSocialAccountListFromJSON,
-    PaginatedSocialAccountListToJSON,
     ResendEmailVerificationFromJSON,
     ResendEmailVerificationToJSON,
     RestAuthDetailFromJSON,
     RestAuthDetailToJSON,
+    SocialAccountFromJSON,
+    SocialAccountToJSON,
     SocialConnectFromJSON,
     SocialConnectToJSON,
     SocialLoginFromJSON,
@@ -84,11 +84,6 @@ export interface AuthRegistrationResendEmailCreateRequest {
 export interface AuthSocialaccountsDisconnectCreateRequest {
     id: number;
     socialConnect?: SocialConnect;
-}
-
-export interface AuthSocialaccountsListRequest {
-    limit?: number;
-    offset?: number;
 }
 
 /**
@@ -483,16 +478,8 @@ export class AuthApi extends runtime.BaseAPI {
     /**
      * List SocialAccounts for the currently logged in user
      */
-    async authSocialaccountsListRaw(requestParameters: AuthSocialaccountsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedSocialAccountList>> {
+    async authSocialaccountsListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SocialAccount>>> {
         const queryParameters: any = {};
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -511,14 +498,14 @@ export class AuthApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedSocialAccountListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(SocialAccountFromJSON));
     }
 
     /**
      * List SocialAccounts for the currently logged in user
      */
-    async authSocialaccountsList(requestParameters: AuthSocialaccountsListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedSocialAccountList> {
-        const response = await this.authSocialaccountsListRaw(requestParameters, initOverrides);
+    async authSocialaccountsList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SocialAccount>> {
+        const response = await this.authSocialaccountsListRaw(initOverrides);
         return await response.value();
     }
 

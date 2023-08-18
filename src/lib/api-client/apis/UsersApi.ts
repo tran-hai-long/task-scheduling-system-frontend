@@ -16,14 +16,11 @@
 import * as runtime from '../runtime';
 import type {
   CustomUser,
-  PaginatedCustomUserList,
   PatchedCustomUser,
 } from '../models';
 import {
     CustomUserFromJSON,
     CustomUserToJSON,
-    PaginatedCustomUserListFromJSON,
-    PaginatedCustomUserListToJSON,
     PatchedCustomUserFromJSON,
     PatchedCustomUserToJSON,
 } from '../models';
@@ -44,11 +41,6 @@ export interface UsersUserRetrieveRequest {
 export interface UsersUserUpdateRequest {
     id: number;
     customUser: CustomUser;
-}
-
-export interface UsersUsersListRequest {
-    limit?: number;
-    offset?: number;
 }
 
 /**
@@ -220,16 +212,8 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Return a list of all users in the database. For admins only.
      */
-    async usersUsersListRaw(requestParameters: UsersUsersListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedCustomUserList>> {
+    async usersUsersListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CustomUser>>> {
         const queryParameters: any = {};
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -248,14 +232,14 @@ export class UsersApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedCustomUserListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CustomUserFromJSON));
     }
 
     /**
      * Return a list of all users in the database. For admins only.
      */
-    async usersUsersList(requestParameters: UsersUsersListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedCustomUserList> {
-        const response = await this.usersUsersListRaw(requestParameters, initOverrides);
+    async usersUsersList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CustomUser>> {
+        const response = await this.usersUsersListRaw(initOverrides);
         return await response.value();
     }
 

@@ -4,3 +4,4 @@
     <p>Password: </p><input name="password" type="password"/>
     <button>Log in</button>
 </form>
+<a href="/">Back to home page.</a>

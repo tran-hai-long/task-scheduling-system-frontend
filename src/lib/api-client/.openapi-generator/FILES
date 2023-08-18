@@ -11,9 +11,6 @@ models/CustomUserAuth.ts
 models/CustomUserLogin.ts
 models/Detail.ts
 models/JWT.ts
-models/PaginatedCustomUserList.ts
-models/PaginatedSocialAccountList.ts
-models/PaginatedTaskList.ts
 models/PasswordChange.ts
 models/PatchedCustomUser.ts
 models/PatchedCustomUserAuth.ts

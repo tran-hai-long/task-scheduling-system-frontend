@@ -13,5 +13,5 @@ export async function load({cookies, request}) {
         result => apiResult = result,
         error => redirectToErrorPages(error.status)
     );
-    if (apiResult != null) return apiResult;
+    if (apiResult != null) return {tasks: apiResult};
 }

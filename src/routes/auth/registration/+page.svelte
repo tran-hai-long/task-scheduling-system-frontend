@@ -1,7 +1,7 @@
 <script>
     export let data;
 </script>
-
+<a href="/">Back to home page.</a>
 <form method="POST">
     <p>Username: </p> <input type="text" required name="username">
     <p>Email: </p> <input type="email" required name="email">

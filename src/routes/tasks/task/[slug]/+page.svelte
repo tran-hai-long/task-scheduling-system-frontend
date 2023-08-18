@@ -1,7 +1,7 @@
 <script>
     export let data;
 </script>
-
+<a href="/">Back to home page.</a>
 <strong>{data.name}</strong>
 <p>Description: {data.description}</p>
 <p>Start time: {data.startTime}</p>
