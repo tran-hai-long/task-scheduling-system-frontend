@@ -16,13 +16,10 @@
 import * as runtime from '../runtime';
 import type {
   CustomRegister,
-  CustomUserAuth,
   CustomUserLogin,
   Detail,
   JWT,
   PaginatedSocialAccountList,
-  PasswordChange,
-  PatchedCustomUserAuth,
   ResendEmailVerification,
   RestAuthDetail,
   SocialConnect,
@@ -32,8 +29,6 @@ import type {
 import {
     CustomRegisterFromJSON,
     CustomRegisterToJSON,
-    CustomUserAuthFromJSON,
-    CustomUserAuthToJSON,
     CustomUserLoginFromJSON,
     CustomUserLoginToJSON,
     DetailFromJSON,
@@ -42,10 +37,6 @@ import {
     JWTToJSON,
     PaginatedSocialAccountListFromJSON,
     PaginatedSocialAccountListToJSON,
-    PasswordChangeFromJSON,
-    PasswordChangeToJSON,
-    PatchedCustomUserAuthFromJSON,
-    PatchedCustomUserAuthToJSON,
     ResendEmailVerificationFromJSON,
     ResendEmailVerificationToJSON,
     RestAuthDetailFromJSON,
@@ -78,10 +69,6 @@ export interface AuthLoginCreateRequest {
     customUserLogin: CustomUserLogin;
 }
 
-export interface AuthPasswordChangeCreateRequest {
-    passwordChange: PasswordChange;
-}
-
 export interface AuthRegistrationConfirmEmailCreateRequest {
     verifyEmail: VerifyEmail;
 }
@@ -102,14 +89,6 @@ export interface AuthSocialaccountsDisconnectCreateRequest {
 export interface AuthSocialaccountsListRequest {
     limit?: number;
     offset?: number;
-}
-
-export interface AuthUserPartialUpdateRequest {
-    patchedCustomUserAuth?: PatchedCustomUserAuth;
-}
-
-export interface AuthUserUpdateRequest {
-    customUserAuth: CustomUserAuth;
 }
 
 /**
@@ -341,47 +320,6 @@ export class AuthApi extends runtime.BaseAPI {
     }
 
     /**
-     * Calls Django Auth SetPasswordForm save method.  Accepts the following POST parameters: new_password1, new_password2 Returns the success/fail message.
-     */
-    async authPasswordChangeCreateRaw(requestParameters: AuthPasswordChangeCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAuthDetail>> {
-        if (requestParameters.passwordChange === null || requestParameters.passwordChange === undefined) {
-            throw new runtime.RequiredError('passwordChange','Required parameter requestParameters.passwordChange was null or undefined when calling authPasswordChangeCreate.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("jwtHeaderAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/auth/password/change/`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PasswordChangeToJSON(requestParameters.passwordChange),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => RestAuthDetailFromJSON(jsonValue));
-    }
-
-    /**
-     * Calls Django Auth SetPasswordForm save method.  Accepts the following POST parameters: new_password1, new_password2 Returns the success/fail message.
-     */
-    async authPasswordChangeCreate(requestParameters: AuthPasswordChangeCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestAuthDetail> {
-        const response = await this.authPasswordChangeCreateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Verify email
      */
     async authRegistrationConfirmEmailCreateRaw(requestParameters: AuthRegistrationConfirmEmailCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Detail>> {
@@ -581,118 +519,6 @@ export class AuthApi extends runtime.BaseAPI {
      */
     async authSocialaccountsList(requestParameters: AuthSocialaccountsListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedSocialAccountList> {
         const response = await this.authSocialaccountsListRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Reads and updates UserModel fields Accepts GET, PUT, PATCH methods.  Default accepted fields: username, full_name  Default display fields: pk, username, email, full_name  Read-only fields: pk, email  Returns UserModel fields.
-     */
-    async authUserPartialUpdateRaw(requestParameters: AuthUserPartialUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomUserAuth>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("jwtHeaderAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/auth/user/`,
-            method: 'PATCH',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PatchedCustomUserAuthToJSON(requestParameters.patchedCustomUserAuth),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CustomUserAuthFromJSON(jsonValue));
-    }
-
-    /**
-     * Reads and updates UserModel fields Accepts GET, PUT, PATCH methods.  Default accepted fields: username, full_name  Default display fields: pk, username, email, full_name  Read-only fields: pk, email  Returns UserModel fields.
-     */
-    async authUserPartialUpdate(requestParameters: AuthUserPartialUpdateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomUserAuth> {
-        const response = await this.authUserPartialUpdateRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Reads and updates UserModel fields Accepts GET, PUT, PATCH methods.  Default accepted fields: username, full_name  Default display fields: pk, username, email, full_name  Read-only fields: pk, email  Returns UserModel fields.
-     */
-    async authUserRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomUserAuth>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("jwtHeaderAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/auth/user/`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CustomUserAuthFromJSON(jsonValue));
-    }
-
-    /**
-     * Reads and updates UserModel fields Accepts GET, PUT, PATCH methods.  Default accepted fields: username, full_name  Default display fields: pk, username, email, full_name  Read-only fields: pk, email  Returns UserModel fields.
-     */
-    async authUserRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomUserAuth> {
-        const response = await this.authUserRetrieveRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Reads and updates UserModel fields Accepts GET, PUT, PATCH methods.  Default accepted fields: username, full_name  Default display fields: pk, username, email, full_name  Read-only fields: pk, email  Returns UserModel fields.
-     */
-    async authUserUpdateRaw(requestParameters: AuthUserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomUserAuth>> {
-        if (requestParameters.customUserAuth === null || requestParameters.customUserAuth === undefined) {
-            throw new runtime.RequiredError('customUserAuth','Required parameter requestParameters.customUserAuth was null or undefined when calling authUserUpdate.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("jwtHeaderAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/auth/user/`,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: CustomUserAuthToJSON(requestParameters.customUserAuth),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CustomUserAuthFromJSON(jsonValue));
-    }
-
-    /**
-     * Reads and updates UserModel fields Accepts GET, PUT, PATCH methods.  Default accepted fields: username, full_name  Default display fields: pk, username, email, full_name  Read-only fields: pk, email  Returns UserModel fields.
-     */
-    async authUserUpdate(requestParameters: AuthUserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomUserAuth> {
-        const response = await this.authUserUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

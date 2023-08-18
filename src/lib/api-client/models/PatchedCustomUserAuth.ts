@@ -37,12 +37,6 @@ export interface PatchedCustomUserAuth {
      * @memberof PatchedCustomUserAuth
      */
     username?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchedCustomUserAuth
-     */
-    fullName?: string;
 }
 
 /**
@@ -67,7 +61,6 @@ export function PatchedCustomUserAuthFromJSONTyped(json: any, ignoreDiscriminato
         'id': !exists(json, 'id') ? undefined : json['id'],
         'email': !exists(json, 'email') ? undefined : json['email'],
         'username': !exists(json, 'username') ? undefined : json['username'],
-        'fullName': !exists(json, 'full_name') ? undefined : json['full_name'],
     };
 }
 
@@ -81,7 +74,6 @@ export function PatchedCustomUserAuthToJSON(value?: PatchedCustomUserAuth | null
     return {
         
         'username': value.username,
-        'full_name': value.fullName,
     };
 }
 

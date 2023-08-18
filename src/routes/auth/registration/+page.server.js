@@ -22,7 +22,6 @@ export const actions = {
         await authClient.authRegistrationCreate({customRegister: credentials}).then(
             result => {
                 apiResult = result;
-                console.log(result);
             },
             error => redirectToErrorPages(error.status));
     }

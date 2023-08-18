@@ -37,12 +37,6 @@ export interface CustomUserAuth {
      * @memberof CustomUserAuth
      */
     username: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomUserAuth
-     */
-    fullName: string;
 }
 
 /**
@@ -53,7 +47,6 @@ export function instanceOfCustomUserAuth(value: object): boolean {
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "email" in value;
     isInstance = isInstance && "username" in value;
-    isInstance = isInstance && "fullName" in value;
 
     return isInstance;
 }
@@ -71,7 +64,6 @@ export function CustomUserAuthFromJSONTyped(json: any, ignoreDiscriminator: bool
         'id': json['id'],
         'email': json['email'],
         'username': json['username'],
-        'fullName': json['full_name'],
     };
 }
 
@@ -85,7 +77,6 @@ export function CustomUserAuthToJSON(value?: CustomUserAuth | null): any {
     return {
         
         'username': value.username,
-        'full_name': value.fullName,
     };
 }
 

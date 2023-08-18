@@ -12,7 +12,7 @@ paths:
         access token to Github to retrieve Github account email for use in authentication
         or account registration.
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -25,9 +25,9 @@ paths:
             schema:
               $ref: '#/components/schemas/SocialLogin'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -42,7 +42,7 @@ paths:
         Functions similar to GithubLoginView, but will link a Github account to an
         existing system account instead of creating a new account.
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -55,8 +55,8 @@ paths:
             schema:
               $ref: '#/components/schemas/SocialConnect'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -72,7 +72,7 @@ paths:
         access token to Google to retrieve Google account email for use in authentication
         or account registration.
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -85,9 +85,9 @@ paths:
             schema:
               $ref: '#/components/schemas/SocialLogin'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -102,7 +102,7 @@ paths:
         Functions similar to GoogleLoginView, but will link a Google account to an
         existing system account instead of creating a new account.
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -115,8 +115,8 @@ paths:
             schema:
               $ref: '#/components/schemas/SocialConnect'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -137,7 +137,7 @@ paths:
 
         Return the REST Framework Token Object's key.
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -151,9 +151,9 @@ paths:
               $ref: '#/components/schemas/CustomUserLogin'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -170,43 +170,11 @@ paths:
 
         Accepts/Returns nothing.
       tags:
-        - auth
+      - auth
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RestAuthDetail'
-          description: ''
-  /api/v1/auth/password/change/:
-    post:
-      operationId: auth_password_change_create
-      description: |-
-        Calls Django Auth SetPasswordForm save method.
-
-        Accepts the following POST parameters: new_password1, new_password2
-        Returns the success/fail message.
-      tags:
-        - auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PasswordChange'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PasswordChange'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PasswordChange'
-        required: true
-      security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -224,7 +192,7 @@ paths:
 
         Returns the REST Framework Token Object's key.
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -238,9 +206,9 @@ paths:
               $ref: '#/components/schemas/CustomRegister'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -253,7 +221,7 @@ paths:
       operationId: auth_registration_confirm_email_create
       description: Verify email
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -267,9 +235,9 @@ paths:
               $ref: '#/components/schemas/VerifyEmail'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -281,7 +249,7 @@ paths:
     post:
       operationId: auth_registration_resend_email_create
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -295,9 +263,9 @@ paths:
               $ref: '#/components/schemas/ResendEmailVerification'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-        - { }
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -310,23 +278,23 @@ paths:
       operationId: auth_socialaccounts_list
       description: List SocialAccounts for the currently logged in user
       parameters:
-        - name: limit
-          required: false
-          in: query
-          description: Number of results to return per page.
-          schema:
-            type: integer
-        - name: offset
-          required: false
-          in: query
-          description: The initial index from which to return the results.
-          schema:
-            type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
-        - auth
+      - auth
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -340,13 +308,13 @@ paths:
       description: Disconnect SocialAccount from remote service for the currently
         logged in user
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - auth
+      - auth
       requestBody:
         content:
           application/json:
@@ -359,125 +327,26 @@ paths:
             schema:
               $ref: '#/components/schemas/SocialConnect'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           description: No response body
-  /api/v1/auth/user/:
-    get:
-      operationId: auth_user_retrieve
-      description: |-
-        Reads and updates UserModel fields
-        Accepts GET, PUT, PATCH methods.
-
-        Default accepted fields: username, full_name
-
-        Default display fields: pk, username, email, full_name
-
-        Read-only fields: pk, email
-
-        Returns UserModel fields.
-      tags:
-        - auth
-      security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomUserAuth'
-          description: ''
-    put:
-      operationId: auth_user_update
-      description: |-
-        Reads and updates UserModel fields
-        Accepts GET, PUT, PATCH methods.
-
-        Default accepted fields: username, full_name
-
-        Default display fields: pk, username, email, full_name
-
-        Read-only fields: pk, email
-
-        Returns UserModel fields.
-      tags:
-        - auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomUserAuth'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CustomUserAuth'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CustomUserAuth'
-        required: true
-      security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomUserAuth'
-          description: ''
-    patch:
-      operationId: auth_user_partial_update
-      description: |-
-        Reads and updates UserModel fields
-        Accepts GET, PUT, PATCH methods.
-
-        Default accepted fields: username, full_name
-
-        Default display fields: pk, username, email, full_name
-
-        Read-only fields: pk, email
-
-        Returns UserModel fields.
-      tags:
-        - auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCustomUserAuth'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedCustomUserAuth'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedCustomUserAuth'
-      security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomUserAuth'
-          description: ''
   /api/v1/tasks/task/{id}/:
     get:
       operationId: tasks_task_retrieve
       description: Get, update or delete a task created by the logged-in user.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - tasks
+      - tasks
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -489,13 +358,13 @@ paths:
       operationId: tasks_task_update
       description: Get, update or delete a task created by the logged-in user.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - tasks
+      - tasks
       requestBody:
         content:
           application/json:
@@ -509,8 +378,8 @@ paths:
               $ref: '#/components/schemas/Task'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -522,13 +391,13 @@ paths:
       operationId: tasks_task_partial_update
       description: Get, update or delete a task created by the logged-in user.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - tasks
+      - tasks
       requestBody:
         content:
           application/json:
@@ -541,8 +410,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedTask'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -554,16 +423,16 @@ paths:
       operationId: tasks_task_destroy
       description: Get, update or delete a task created by the logged-in user.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - tasks
+      - tasks
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '204':
           description: No response body
@@ -574,23 +443,23 @@ paths:
         Return a list of all tasks created by the logged-in user. User can also POST to
         create a new task.
       parameters:
-        - name: limit
-          required: false
-          in: query
-          description: Number of results to return per page.
-          schema:
-            type: integer
-        - name: offset
-          required: false
-          in: query
-          description: The initial index from which to return the results.
-          schema:
-            type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
-        - tasks
+      - tasks
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -604,7 +473,7 @@ paths:
         Return a list of all tasks created by the logged-in user. User can also POST to
         create a new task.
       tags:
-        - tasks
+      - tasks
       requestBody:
         content:
           application/json:
@@ -618,8 +487,8 @@ paths:
               $ref: '#/components/schemas/Task'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '201':
           content:
@@ -632,23 +501,23 @@ paths:
       operationId: tasks_to_do_list
       description: Return a list of all to-do tasks belong to the logged-in user.
       parameters:
-        - name: limit
-          required: false
-          in: query
-          description: Number of results to return per page.
-          schema:
-            type: integer
-        - name: offset
-          required: false
-          in: query
-          description: The initial index from which to return the results.
-          schema:
-            type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
-        - tasks
+      - tasks
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -656,21 +525,142 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedTaskList'
           description: ''
+  /api/v1/user/change-password/:
+    post:
+      operationId: user_change_password_create
+      description: Enter old password and new password. Return success/fail message.
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+        required: true
+      security:
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Detail'
+          description: ''
+  /api/v1/user/profile/:
+    get:
+      operationId: user_profile_retrieve
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - user
+      security:
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserAuth'
+          description: ''
+    put:
+      operationId: user_profile_update
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomUserAuth'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomUserAuth'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomUserAuth'
+        required: true
+      security:
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserAuth'
+          description: ''
+    patch:
+      operationId: user_profile_partial_update
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomUserAuth'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomUserAuth'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomUserAuth'
+      security:
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserAuth'
+          description: ''
   /api/v1/users/user/{id}/:
     get:
       operationId: users_user_retrieve
       description: Get, update or delete a user. For admins only.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - users
+      - users
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -682,13 +672,13 @@ paths:
       operationId: users_user_update
       description: Get, update or delete a user. For admins only.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - users
+      - users
       requestBody:
         content:
           application/json:
@@ -702,8 +692,8 @@ paths:
               $ref: '#/components/schemas/CustomUser'
         required: true
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -715,13 +705,13 @@ paths:
       operationId: users_user_partial_update
       description: Get, update or delete a user. For admins only.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - users
+      - users
       requestBody:
         content:
           application/json:
@@ -734,8 +724,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCustomUser'
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -747,16 +737,16 @@ paths:
       operationId: users_user_destroy
       description: Get, update or delete a user. For admins only.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-        - users
+      - users
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '204':
           description: No response body
@@ -765,23 +755,23 @@ paths:
       operationId: users_users_list
       description: Return a list of all users in the database. For admins only.
       parameters:
-        - name: limit
-          required: false
-          in: query
-          description: Number of results to return per page.
-          schema:
-            type: integer
-        - name: offset
-          required: false
-          in: query
-          description: The initial index from which to return the results.
-          schema:
-            type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
-        - users
+      - users
       security:
-        - jwtHeaderAuth: [ ]
-        - jwtCookieAuth: [ ]
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -808,10 +798,10 @@ components:
           type: string
           writeOnly: true
       required:
-        - email
-        - password
-        - retyped_password
-        - username
+      - email
+      - password
+      - retyped_password
+      - username
     CustomUser:
       type: object
       properties:
@@ -865,12 +855,12 @@ components:
             type: integer
           description: Specific permissions for this user.
       required:
-        - date_joined
-        - email
-        - full_name
-        - id
-        - last_login
-        - username
+      - date_joined
+      - email
+      - full_name
+      - id
+      - last_login
+      - username
     CustomUserAuth:
       type: object
       description: User model w/o password
@@ -886,15 +876,10 @@ components:
         username:
           type: string
           maxLength: 64
-        full_name:
-          type: string
-          title: Name of User
-          maxLength: 255
       required:
-        - email
-        - full_name
-        - id
-        - username
+      - email
+      - id
+      - username
     CustomUserLogin:
       type: object
       properties:
@@ -904,14 +889,14 @@ components:
         password:
           type: string
       required:
-        - password
+      - password
     Detail:
       type: object
       properties:
         detail:
           type: string
       required:
-        - detail
+      - detail
     JWT:
       type: object
       description: Serializer for JWT authentication.
@@ -923,9 +908,9 @@ components:
         user:
           $ref: '#/components/schemas/CustomUserAuth'
       required:
-        - access
-        - refresh
-        - user
+      - access
+      - refresh
+      - user
     PaginatedCustomUserList:
       type: object
       properties:
@@ -999,9 +984,9 @@ components:
           type: string
           maxLength: 128
       required:
-        - new_password1
-        - new_password2
-        - old_password
+      - new_password1
+      - new_password2
+      - old_password
     PatchedCustomUser:
       type: object
       properties:
@@ -1069,10 +1054,6 @@ components:
         username:
           type: string
           maxLength: 64
-        full_name:
-          type: string
-          title: Name of User
-          maxLength: 255
     PatchedTask:
       type: object
       properties:
@@ -1113,9 +1094,9 @@ components:
           readOnly: true
     PriorityEnum:
       enum:
-        - 0
-        - 1
-        - 2
+      - 0
+      - 1
+      - 2
       type: integer
       description: |-
         * `0` - Thap
@@ -1123,8 +1104,8 @@ components:
         * `2` - Cao
     ProviderEnum:
       enum:
-        - github
-        - google
+      - github
+      - google
       type: string
       description: |-
         * `github` - GitHub
@@ -1136,7 +1117,7 @@ components:
           type: string
           format: email
       required:
-        - email
+      - email
     RestAuthDetail:
       type: object
       properties:
@@ -1144,7 +1125,7 @@ components:
           type: string
           readOnly: true
       required:
-        - detail
+      - detail
     SocialAccount:
       type: object
       description: serialize allauth SocialAccounts for use with a REST API
@@ -1166,11 +1147,11 @@ components:
           format: date-time
           readOnly: true
       required:
-        - date_joined
-        - id
-        - last_login
-        - provider
-        - uid
+      - date_joined
+      - id
+      - last_login
+      - provider
+      - uid
     SocialConnect:
       type: object
       properties:
@@ -1191,9 +1172,9 @@ components:
           type: string
     StatusEnum:
       enum:
-        - 0
-        - 1
-        - 2
+      - 0
+      - 1
+      - 2
       type: integer
       description: |-
         * `0` - Chua lam
@@ -1238,10 +1219,10 @@ components:
           format: date-time
           readOnly: true
       required:
-        - created_time
-        - id
-        - modified_time
-        - name
+      - created_time
+      - id
+      - modified_time
+      - name
     VerifyEmail:
       type: object
       properties:
@@ -1249,7 +1230,7 @@ components:
           type: string
           writeOnly: true
       required:
-        - key
+      - key
   securitySchemes:
     jwtCookieAuth:
       type: apiKey
