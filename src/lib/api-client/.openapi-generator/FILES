@@ -4,9 +4,11 @@ apis/TasksApi.ts
 apis/UsersApi.ts
 apis/index.ts
 index.ts
+models/CustomRegister.ts
 models/CustomUser.ts
 models/CustomUserAuth.ts
 models/CustomUserLogin.ts
+models/Detail.ts
 models/JWT.ts
 models/PaginatedCustomUserList.ts
 models/PaginatedSocialAccountList.ts
@@ -17,7 +19,6 @@ models/PatchedCustomUserAuth.ts
 models/PatchedTask.ts
 models/PriorityEnum.ts
 models/ProviderEnum.ts
-models/Register.ts
 models/ResendEmailVerification.ts
 models/RestAuthDetail.ts
 models/SocialAccount.ts

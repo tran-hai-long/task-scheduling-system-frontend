@@ -16,53 +16,53 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface Register
+ * @interface CustomRegister
  */
-export interface Register {
+export interface CustomRegister {
     /**
      * 
      * @type {string}
-     * @memberof Register
+     * @memberof CustomRegister
      */
     username: string;
     /**
      * 
      * @type {string}
-     * @memberof Register
+     * @memberof CustomRegister
      */
     email: string;
     /**
      * 
      * @type {string}
-     * @memberof Register
+     * @memberof CustomRegister
      */
-    password1: string;
+    password: string;
     /**
      * 
      * @type {string}
-     * @memberof Register
+     * @memberof CustomRegister
      */
-    password2: string;
+    retypedPassword: string;
 }
 
 /**
- * Check if a given object implements the Register interface.
+ * Check if a given object implements the CustomRegister interface.
  */
-export function instanceOfRegister(value: object): boolean {
+export function instanceOfCustomRegister(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "username" in value;
     isInstance = isInstance && "email" in value;
-    isInstance = isInstance && "password1" in value;
-    isInstance = isInstance && "password2" in value;
+    isInstance = isInstance && "password" in value;
+    isInstance = isInstance && "retypedPassword" in value;
 
     return isInstance;
 }
 
-export function RegisterFromJSON(json: any): Register {
-    return RegisterFromJSONTyped(json, false);
+export function CustomRegisterFromJSON(json: any): CustomRegister {
+    return CustomRegisterFromJSONTyped(json, false);
 }
 
-export function RegisterFromJSONTyped(json: any, ignoreDiscriminator: boolean): Register {
+export function CustomRegisterFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomRegister {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -70,12 +70,12 @@ export function RegisterFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'username': json['username'],
         'email': json['email'],
-        'password1': json['password1'],
-        'password2': json['password2'],
+        'password': json['password'],
+        'retypedPassword': json['retyped_password'],
     };
 }
 
-export function RegisterToJSON(value?: Register | null): any {
+export function CustomRegisterToJSON(value?: CustomRegister | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -86,8 +86,8 @@ export function RegisterToJSON(value?: Register | null): any {
         
         'username': value.username,
         'email': value.email,
-        'password1': value.password1,
-        'password2': value.password2,
+        'password': value.password,
+        'retyped_password': value.retypedPassword,
     };
 }
 

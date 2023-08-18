@@ -15,13 +15,14 @@
 
 import * as runtime from '../runtime';
 import type {
+  CustomRegister,
   CustomUserAuth,
   CustomUserLogin,
+  Detail,
   JWT,
   PaginatedSocialAccountList,
   PasswordChange,
   PatchedCustomUserAuth,
-  Register,
   ResendEmailVerification,
   RestAuthDetail,
   SocialConnect,
@@ -29,10 +30,14 @@ import type {
   VerifyEmail,
 } from '../models';
 import {
+    CustomRegisterFromJSON,
+    CustomRegisterToJSON,
     CustomUserAuthFromJSON,
     CustomUserAuthToJSON,
     CustomUserLoginFromJSON,
     CustomUserLoginToJSON,
+    DetailFromJSON,
+    DetailToJSON,
     JWTFromJSON,
     JWTToJSON,
     PaginatedSocialAccountListFromJSON,
@@ -41,8 +46,6 @@ import {
     PasswordChangeToJSON,
     PatchedCustomUserAuthFromJSON,
     PatchedCustomUserAuthToJSON,
-    RegisterFromJSON,
-    RegisterToJSON,
     ResendEmailVerificationFromJSON,
     ResendEmailVerificationToJSON,
     RestAuthDetailFromJSON,
@@ -84,7 +87,7 @@ export interface AuthRegistrationConfirmEmailCreateRequest {
 }
 
 export interface AuthRegistrationCreateRequest {
-    register: Register;
+    customRegister: CustomRegister;
 }
 
 export interface AuthRegistrationResendEmailCreateRequest {
@@ -379,8 +382,9 @@ export class AuthApi extends runtime.BaseAPI {
     }
 
     /**
+     * Verify email
      */
-    async authRegistrationConfirmEmailCreateRaw(requestParameters: AuthRegistrationConfirmEmailCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAuthDetail>> {
+    async authRegistrationConfirmEmailCreateRaw(requestParameters: AuthRegistrationConfirmEmailCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Detail>> {
         if (requestParameters.verifyEmail === null || requestParameters.verifyEmail === undefined) {
             throw new runtime.RequiredError('verifyEmail','Required parameter requestParameters.verifyEmail was null or undefined when calling authRegistrationConfirmEmailCreate.');
         }
@@ -407,12 +411,13 @@ export class AuthApi extends runtime.BaseAPI {
             body: VerifyEmailToJSON(requestParameters.verifyEmail),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RestAuthDetailFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DetailFromJSON(jsonValue));
     }
 
     /**
+     * Verify email
      */
-    async authRegistrationConfirmEmailCreate(requestParameters: AuthRegistrationConfirmEmailCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestAuthDetail> {
+    async authRegistrationConfirmEmailCreate(requestParameters: AuthRegistrationConfirmEmailCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Detail> {
         const response = await this.authRegistrationConfirmEmailCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -420,9 +425,9 @@ export class AuthApi extends runtime.BaseAPI {
     /**
      * Create a new system account with credentials provided by the user.  Accepts username, email, password and retyped password.  Returns the REST Framework Token Object\'s key.
      */
-    async authRegistrationCreateRaw(requestParameters: AuthRegistrationCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JWT>> {
-        if (requestParameters.register === null || requestParameters.register === undefined) {
-            throw new runtime.RequiredError('register','Required parameter requestParameters.register was null or undefined when calling authRegistrationCreate.');
+    async authRegistrationCreateRaw(requestParameters: AuthRegistrationCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Detail>> {
+        if (requestParameters.customRegister === null || requestParameters.customRegister === undefined) {
+            throw new runtime.RequiredError('customRegister','Required parameter requestParameters.customRegister was null or undefined when calling authRegistrationCreate.');
         }
 
         const queryParameters: any = {};
@@ -444,16 +449,16 @@ export class AuthApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RegisterToJSON(requestParameters.register),
+            body: CustomRegisterToJSON(requestParameters.customRegister),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => JWTFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DetailFromJSON(jsonValue));
     }
 
     /**
      * Create a new system account with credentials provided by the user.  Accepts username, email, password and retyped password.  Returns the REST Framework Token Object\'s key.
      */
-    async authRegistrationCreate(requestParameters: AuthRegistrationCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JWT> {
+    async authRegistrationCreate(requestParameters: AuthRegistrationCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Detail> {
         const response = await this.authRegistrationCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
